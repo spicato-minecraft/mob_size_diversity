@@ -67,13 +67,13 @@ See [minecraft-mods/docs/README.md](../docs/README.md) for org-wide release conv
 
 | Layer      | Purpose |
 |------------|---------|
-| Unit tests | Sampler PDF, no wall pile-up, Set A/B/C support |
-| GameTests  | Smoke load; spawn persist; armor stand skipped |
+| Unit tests | Sampler PDF; rule matcher (tag > entity > namespace) |
+| GameTests  | Persist; armor stand skipped; cow Set C vs zombie Set A |
 
 Behavior tests are tracked in [Notion Tasks](https://app.notion.com/p/3b716e8d4da380adbd93cf0a73b39d5c). Manual UAT items live in the Mod Catalog.
 
 ## Architecture
 
-Applies vanilla `Attributes.SCALE` to `Mob` only (not players, armor stands, or mannequins). Size is rolled once and persisted; config changes do not retcon existing attachments. JSON is the primary config surface; datapacks can include extra mobs; JSON wins on conflict.
+JSON at `config/mob_size_diversity.json` is the primary rule surface (presets + tag/entity/namespace rules). Datapack entity tags can add mobs to {@code #mob_size_diversity:set_a}; they do not define curves. Unknown namespaces do not roll until JSON or that tag includes them.
 
 Requirements: [Mob Size Diversity](https://app.notion.com/p/3cf16e8d4da381799edbfaedb6e73e2a).

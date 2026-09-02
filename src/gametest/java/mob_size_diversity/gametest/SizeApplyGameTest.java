@@ -19,6 +19,20 @@ import net.minecraft.world.level.block.Blocks;
 public class SizeApplyGameTest {
 
 	@GameTest(maxTicks = 100)
+	public void cowUsesSetCBand(GameTestHelper context) {
+		buildFloor(context);
+		Mob cow = context.spawn(EntityType.COW, 1, 1, 1, EntitySpawnReason.NATURAL);
+		if (!SizeState.hasRoll(cow)) {
+			throw fail("cow missing rolled scale");
+		}
+		double rolled = SizeState.requireRoll(cow);
+		if (rolled < 0.8 || rolled > 1.1) {
+			throw fail("Set C roll out of range: " + rolled);
+		}
+		context.succeed();
+	}
+
+	@GameTest(maxTicks = 100)
 	public void zombieRollsPersistentScale(GameTestHelper context) {
 		buildFloor(context);
 		Mob zombie = context.spawn(EntityType.ZOMBIE, 1, 1, 1, EntitySpawnReason.NATURAL);
@@ -27,7 +41,7 @@ public class SizeApplyGameTest {
 		}
 		double rolled = SizeState.requireRoll(zombie);
 		if (rolled < 0.8 || rolled > 1.2) {
-			throw fail("stub Set A roll out of range: " + rolled);
+			throw fail("Set A roll out of range: " + rolled);
 		}
 		Double modifier = SizeAttributes.modifierScale(zombie);
 		if (modifier == null || Math.abs(modifier - rolled) > 1e-6) {
