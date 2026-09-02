@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "mob_size_diversity",
+	"version": "${version}",
+	"name": "Mob Size Diversity",
+	"description": "Persistent randomized scale for living mobs. Commons and elites use different size bands. Pack authors add other mods' mobs via JSON or datapack.",
+	"authors": [
+		"spicato"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/mob_size_diversity/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"mob_size_diversity.MobSizeDiversity"
+		],
+		"client": [
+			"mob_size_diversity.MobSizeDiversityClient"
+		]
+	},
+	"mixins": [
+		"mob_size_diversity.mixins.json",
+		{
+			"config": "mob_size_diversity.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"mob_loot_rebalance": "*"
+	}
+}

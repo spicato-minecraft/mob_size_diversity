@@ -1,0 +1,17 @@
+{
+	"schemaVersion": 1,
+	"id": "mob_size_diversity_test",
+	"version": "${version}",
+	"name": "Mob Size Diversity Game Tests",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-gametest": [
+			"mob_size_diversity.gametest.ModLoadsGameTest"
+		]
+	},
+	"depends": {
+		"mob_size_diversity": "*",
+		"fabric-api": "*",
+		"minecraft": "~1.21.11"
+	}
+}
