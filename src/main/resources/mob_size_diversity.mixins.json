@@ -3,6 +3,7 @@
 	"package": "mob_size_diversity.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"MobMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

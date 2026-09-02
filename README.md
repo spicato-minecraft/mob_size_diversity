@@ -67,8 +67,8 @@ See [minecraft-mods/docs/README.md](../docs/README.md) for org-wide release conv
 
 | Layer      | Purpose |
 |------------|---------|
-| Unit tests | Sampler PDF, rule matching, no wall pile-up |
-| GameTests  | Persist, living-mob-only apply, elite tag band, new-entity rolls |
+| Unit tests | Sampler PDF, no wall pile-up, Set A/B/C support |
+| GameTests  | Smoke load; spawn persist; armor stand skipped |
 
 Behavior tests are tracked in [Notion Tasks](https://app.notion.com/p/3b716e8d4da380adbd93cf0a73b39d5c). Manual UAT items live in the Mod Catalog.
 

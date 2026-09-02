@@ -6,7 +6,8 @@
 	"environment": "*",
 	"entrypoints": {
 		"fabric-gametest": [
-			"mob_size_diversity.gametest.ModLoadsGameTest"
+			"mob_size_diversity.gametest.ModLoadsGameTest",
+			"mob_size_diversity.gametest.SizeApplyGameTest"
 		]
 	},
 	"depends": {
