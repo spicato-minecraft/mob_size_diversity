@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Mob.class)
 public abstract class MobMixin {
 
-	@Inject(method = "finalizeSpawn", at = @At("RETURN"))
+	@Inject(method = "finalizeSpawn", at = @At("RETURN"), order = 2000)
 	private void mob_size_diversity$rollScaleAtSpawn(
 			ServerLevelAccessor level,
 			DifficultyInstance difficulty,

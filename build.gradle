@@ -1,5 +1,5 @@
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -22,6 +22,7 @@ loom {
 			sourceSet sourceSets.client
 		}
 	}
+
 }
 
 fabricApi {
@@ -36,15 +37,58 @@ fabricApi {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
 }
 
+def mlrBuild = gradle.includedBuilds.find { it.name == "mob_loot_rebalance" }
+def mlrJar = file("${rootDir}/../mob_loot_rebalance/build/libs/mob_loot_rebalance-2.0.0.jar")
+
+tasks.register("installLocalMlr") {
+	group = "run"
+	description = "Copy local MLR into this project's run/mods for isolated GameTests. Play the indexed set from ../dev-pack."
+	if (mlrBuild != null) {
+		dependsOn mlrBuild.task(":remapJar")
+	}
+	doLast {
+		if (!mlrJar.file) {
+			throw new GradleException("MLR jar missing: ${mlrJar}")
+		}
+		def dest = file("build/run/gameTest/mods")
+		dest.mkdirs()
+		dest.listFiles()?.findAll { it.file && it.name.endsWith(".jar") }?.each { it.delete() }
+		copy {
+			from mlrJar
+			into dest
+		}
+		logger.lifecycle("Installed {} for GameTest", mlrJar.name)
+	}
+}
+
+if (mlrBuild != null) {
+	tasks.configureEach { task ->
+		if (task.name == "runGameTest") {
+			task.dependsOn("installLocalMlr")
+		}
+	}
+}
+
+tasks.configureEach { task ->
+	if (task.name == "runGameTest") {
+		task.doFirst {
+			def dest = file("build/run/gameTest/mods")
+			if (mlrBuild == null && dest.directory) {
+				dest.listFiles()?.findAll { it.file && it.name.contains("mob_loot_rebalance") }?.each { it.delete() }
+			}
+		}
+	}
+}
+
 test {
 	useJUnitPlatform()
+	jvmArgs "-Dnet.bytebuddy.experimental=true"
 }
 
 processResources {
@@ -63,15 +107,18 @@ processGametestResources {
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
-}
-
 java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
 }
 
 jar {

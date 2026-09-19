@@ -41,16 +41,16 @@ public record ScaleCurve(
 
 	/** Shipped Set A numbers (hostiles / piglins in default JSON). */
 	public static ScaleCurve setA() {
-		return new ScaleCurve(1.0, -0.5, 0.8, 1.2, 0.12, 0.0, 0.0);
+		return new ScaleCurve(1.1, -0.5, 0.95, 1.25, 0.08, 0.0, 0.0);
 	}
 
 	/** Shipped Set B numbers (elite tag rule in default JSON). */
 	public static ScaleCurve setB() {
-		return new ScaleCurve(1.3, -0.2, 1.2, 1.5, 0.12, 0.0, 0.0);
+		return new ScaleCurve(1.4, -0.2, 1.35, 1.55, 0.08, 0.0, 0.0);
 	}
 
 	/** Shipped Set C numbers (passive / other living mobs in default JSON). */
 	public static ScaleCurve setC() {
-		return new ScaleCurve(1.0, 0.0, 0.8, 1.1, 0.12, 0.0, 0.0);
+		return new ScaleCurve(1.1, 0.0, 0.95, 1.15, 0.08, 0.0, 0.0);
 	}
 }

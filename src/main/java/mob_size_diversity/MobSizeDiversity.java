@@ -1,5 +1,6 @@
 package mob_size_diversity;
 
+import mob_size_diversity.apply.CombatReachHook;
 import mob_size_diversity.apply.SizeAttachments;
 import mob_size_diversity.apply.SizeRollService;
 import mob_size_diversity.config.SizeConfig;
@@ -16,7 +17,11 @@ public class MobSizeDiversity implements ModInitializer {
 	public void onInitialize() {
 		SizeAttachments.ROLLED_SCALE.getClass();
 		SizeConfig.get();
+		CombatReachHook.register();
 		ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> SizeRollService.ensureApplied(entity));
+		net.fabricmc.loader.api.FabricLoader.getInstance().getModContainer("mob_loot_rebalance").ifPresent(container ->
+				LOGGER.info("MLR loaded from {}", container.getOrigin())
+		);
 		LOGGER.info("Mob Size Diversity initialized");
 	}
 }

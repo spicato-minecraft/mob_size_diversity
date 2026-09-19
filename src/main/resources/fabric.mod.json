@@ -27,11 +27,12 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.19.3",
-		"minecraft": "~1.21.11",
-		"java": ">=21",
+		"minecraft": "~26.1",
+		"java": ">=25",
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"mob_loot_rebalance": "*"
+		"mob_loot_rebalance": "*",
+		"mob_combat_rebalance": "*"
 	}
 }

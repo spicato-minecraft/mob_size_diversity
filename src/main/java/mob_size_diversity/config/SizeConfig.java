@@ -60,8 +60,29 @@ public final class SizeConfig {
 		LootEliteFlag.resetForTest();
 	}
 
+	/**
+	 * Force a re-read from {@code config/mob_size_diversity.json} and recompile
+	 * presets. Existing mob rolls are not changed.
+	 */
+	public static SizeConfig reload() {
+		instance = load();
+		return instance;
+	}
+
+	/**
+	 * Force a re-read from {@code configDir/mob_size_diversity.json} into the
+	 * process singleton and recompile presets.
+	 */
+	public static SizeConfig reloadFrom(Path configDir) {
+		instance = loadFrom(configDir.resolve(FILE_NAME));
+		return instance;
+	}
+
 	public static SizeConfig load() {
-		Path path = FabricLoader.getInstance().getConfigDir().resolve(FILE_NAME);
+		return loadFrom(FabricLoader.getInstance().getConfigDir().resolve(FILE_NAME));
+	}
+
+	static SizeConfig loadFrom(Path path) {
 		SizeConfig config = defaults();
 		if (Files.isRegularFile(path)) {
 			try (Reader reader = Files.newBufferedReader(path)) {
@@ -76,7 +97,7 @@ public final class SizeConfig {
 		} else {
 			try {
 				Files.createDirectories(path.getParent());
-				config.save(path);
+				config.saveTo(path);
 			} catch (IOException e) {
 				LOGGER.warn("Could not write default config to {}", path, e);
 			}
@@ -128,7 +149,16 @@ public final class SizeConfig {
 		resolvedRules = List.copyOf(compiledRules);
 	}
 
-	private void save(Path path) throws IOException {
+	public void save() {
+		try {
+			saveTo(FabricLoader.getInstance().getConfigDir().resolve(FILE_NAME));
+		} catch (IOException e) {
+			LOGGER.error("Failed to save config {}", FILE_NAME, e);
+		}
+	}
+
+	public void saveTo(Path path) throws IOException {
+		Files.createDirectories(path.getParent());
 		try (Writer writer = Files.newBufferedWriter(path)) {
 			GSON.toJson(toJson(), writer);
 		}
