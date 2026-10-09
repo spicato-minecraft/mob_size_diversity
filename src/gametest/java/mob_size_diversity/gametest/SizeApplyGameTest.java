@@ -13,7 +13,7 @@ import net.minecraft.gametest.framework.GameTestAssertException;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +24,7 @@ public class SizeApplyGameTest {
 	public void cowUsesSetCBand(GameTestHelper context) {
 		SizeConfig.setForTest(SizeConfig.defaults());
 		buildFloor(context);
-		Mob cow = context.spawn(EntityType.COW, 1, 1, 1, EntitySpawnReason.NATURAL);
+		Mob cow = context.spawn(EntityTypes.COW, 1, 1, 1, EntitySpawnReason.NATURAL);
 		if (!SizeState.hasRoll(cow)) {
 			throw fail("cow missing rolled scale");
 		}
@@ -39,7 +39,7 @@ public class SizeApplyGameTest {
 	public void zombieRollsPersistentScale(GameTestHelper context) {
 		SizeConfig.setForTest(SizeConfig.defaults());
 		buildFloor(context);
-		Mob zombie = context.spawn(EntityType.ZOMBIE, 1, 1, 1, EntitySpawnReason.NATURAL);
+		Mob zombie = context.spawn(EntityTypes.ZOMBIE, 1, 1, 1, EntitySpawnReason.NATURAL);
 		if (!SizeState.hasRoll(zombie)) {
 			throw fail("zombie missing rolled scale attachment");
 		}
@@ -66,7 +66,7 @@ public class SizeApplyGameTest {
 	@GameTest(maxTicks = 100)
 	public void armorStandIsNotRolled(GameTestHelper context) {
 		buildFloor(context);
-		ArmorStand stand = context.spawn(EntityType.ARMOR_STAND, 1, 1, 1);
+		ArmorStand stand = context.spawn(EntityTypes.ARMOR_STAND, 1, 1, 1);
 		if (SizeEligibility.shouldRoll(stand)) {
 			throw fail("armor stand should not be eligible");
 		}

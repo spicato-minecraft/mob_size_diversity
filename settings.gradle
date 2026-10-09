@@ -21,6 +21,6 @@ if (mlrProps.file) {
 	mlrProps.withInputStream { props.load(it) }
 	mlrMc = (props.getProperty('minecraft_version') ?: '').trim()
 }
-if (mlrDir.directory && file("${mlrDir}/settings.gradle").file && (mlrMc == '26.1' || mlrMc.startsWith('26.1.'))) {
+if (mlrDir.directory && file("${mlrDir}/settings.gradle").file && (mlrMc == '26.2' || mlrMc.startsWith('26.2.'))) {
 	includeBuild(mlrDir)
 }

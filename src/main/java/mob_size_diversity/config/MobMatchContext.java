@@ -37,7 +37,7 @@ public final class MobMatchContext implements ScaleRuleMatcher.MatchContext {
 			return false;
 		}
 		TagKey<EntityType<?>> tag = TagKey.create(Registries.ENTITY_TYPE, id);
-		return mob.getType().builtInRegistryHolder().is(tag);
+		return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(mob.getType()).is(tag);
 	}
 
 	@Override
