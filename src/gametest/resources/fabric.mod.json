@@ -5,9 +5,13 @@
 	"name": "Mob Size Diversity Game Tests",
 	"environment": "*",
 	"entrypoints": {
+		"main": [
+			"mob_size_diversity.gametest.TestEliteAttachments"
+		],
 		"fabric-gametest": [
 			"mob_size_diversity.gametest.ModLoadsGameTest",
-			"mob_size_diversity.gametest.SizeApplyGameTest"
+			"mob_size_diversity.gametest.SizeApplyGameTest",
+			"mob_size_diversity.gametest.ServerMixinApplySweepGameTest"
 		]
 	},
 	"depends": {

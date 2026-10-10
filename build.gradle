@@ -50,7 +50,7 @@ tasks.register("installLocalMlr") {
 	group = "run"
 	description = "Copy local MLR into this project's run/mods for isolated GameTests. Play the indexed set from ../dev-pack."
 	if (mlrBuild != null) {
-		dependsOn mlrBuild.task(":remapJar")
+		dependsOn mlrBuild.task(":jar")
 	}
 	doLast {
 		if (!mlrJar.file) {
