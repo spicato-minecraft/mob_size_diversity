@@ -44,7 +44,7 @@ dependencies {
 }
 
 def mlrBuild = gradle.includedBuilds.find { it.name == "mob_loot_rebalance" }
-def mlrJar = file("${rootDir}/../mob_loot_rebalance/build/libs/mob_loot_rebalance-2.0.0.jar")
+def mlrJar = file("${rootDir}/../mob_loot_rebalance/build/libs/mob_loot_rebalance-2.1.0.jar")
 
 tasks.register("installLocalMlr") {
 	group = "run"
